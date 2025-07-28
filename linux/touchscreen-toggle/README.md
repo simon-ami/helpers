@@ -11,8 +11,36 @@ A robust solution to enable/disable touchscreen input on Ubuntu 22.04+ (works wi
 - ✅ **Robust error handling** - Lock files prevent multiple instances
 - ✅ **Cross-session compatibility** - Works in both Wayland and X11
 
-## Quick Install
+## Setup & Installation
 
+### Step 1: Install Dependencies
+```bash
+sudo apt install evtest libnotify-bin
+```
+
+### Step 2: Detect Your Touchscreen Devices
+```bash
+# List all input devices to find touchscreen
+grep -E "[Tt]ouch|ELAN" /proc/bus/input/devices
+
+# Example output:
+# N: Name="ELAN2514:00 04F3:2BEB"
+# N: Name="ELAN2514:00 04F3:2BEB Stylus"
+# N: Name="Touchscreen"
+```
+
+**Important:** Note your device names! The script automatically detects devices matching `[Tt]ouch.*[Ss]creen|ELAN.*:.*` but if your touchscreen has a different name pattern, you may need to modify the `DEVICE_PATTERN` variable in the scripts.
+
+### Step 3: Test Manual Touchscreen Detection
+```bash
+# Verify evtest can see your touchscreen devices
+sudo evtest
+
+# This will list numbered devices. Look for your touchscreen devices
+# Press Ctrl+C to exit
+```
+
+### Step 4: Install the Scripts
 ```bash
 # 1. Copy files to correct locations
 cp scripts/touchscreen-toggle.sh ~/
@@ -28,9 +56,15 @@ chmod +x ~/Desktop/touchscreen-toggle.desktop
 
 # 3. Update desktop database
 update-desktop-database ~/.local/share/applications/
+```
 
-# 4. Install dependencies
-sudo apt install evtest libnotify-bin
+### Step 5: Test the Setup
+```bash
+# Test the main script (will prompt for password)
+~/touchscreen-toggle.sh
+
+# You should see: "Touchscreen Disabled: Touchscreen input has been disabled"
+# Run again to enable: "Touchscreen Enabled: Touchscreen input has been enabled"
 ```
 
 ## Usage
@@ -106,8 +140,18 @@ touchscreen-toggle/
 
 ### Script says "No touchscreen devices found"
 ```bash
-# Check for touchscreen devices
+# 1. Check for touchscreen devices with broader search
 grep -i touch /proc/bus/input/devices
+grep -i elan /proc/bus/input/devices
+
+# 2. List ALL input devices to find your touchscreen
+cat /proc/bus/input/devices | grep "Name="
+
+# 3. If you find your touchscreen with a different name pattern,
+#    customize the DEVICE_PATTERN as described in Advanced Configuration
+
+# 4. Test the pattern with this command:
+grep -E "YourCustomPattern" /proc/bus/input/devices
 ```
 
 ### Desktop shortcut doesn't work
@@ -158,6 +202,26 @@ Common touchscreen device names:
 - Minimal privilege requirements
 
 ## Advanced Configuration
+
+### Custom Device Pattern
+If your touchscreen isn't detected, customize the device pattern:
+
+```bash
+# 1. Find your exact device name
+grep -i touch /proc/bus/input/devices
+
+# 2. Edit the scripts to match your device
+nano ~/touchscreen-toggle.sh
+nano ~/touchscreen-toggle-desktop.sh
+
+# 3. Modify this line in both scripts:
+DEVICE_PATTERN="[Tt]ouch.*[Ss]creen|ELAN.*:.*"
+
+# Examples for different devices:
+# For Wacom: DEVICE_PATTERN="[Ww]acom.*[Tt]ouch|[Tt]ouch.*[Ss]creen"
+# For Synaptics: DEVICE_PATTERN="[Ss]ynaptics.*[Tt]ouch|[Tt]ouch.*[Ss]creen"
+# For generic: DEVICE_PATTERN="[Tt]ouch"
+```
 
 ### Custom Icon
 Replace `~/Downloads/finger-touch.png` with your preferred icon (PNG format recommended).
