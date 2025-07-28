@@ -10,6 +10,7 @@ A robust solution to enable/disable touchscreen input on Ubuntu 22.04+ (works wi
 - ✅ **Desktop integration** - GUI password dialog for desktop shortcuts
 - ✅ **Robust error handling** - Lock files prevent multiple instances
 - ✅ **Cross-session compatibility** - Works in both Wayland and X11
+- ✅ **Touchpad preservation** - Only disables touchscreen, keeps touchpad functional
 
 ## Setup & Installation
 
@@ -29,7 +30,7 @@ grep -E "[Tt]ouch|ELAN" /proc/bus/input/devices
 # N: Name="Touchscreen"
 ```
 
-**Important:** Note your device names! The script automatically detects devices matching `[Tt]ouch.*[Ss]creen|ELAN.*:.*` but if your touchscreen has a different name pattern, you may need to modify the `DEVICE_PATTERN` variable in the scripts.
+**Important:** Note your device names! The script automatically detects devices matching `[Tt]ouch.*[Ss]creen|ELAN2514.*` (specifically targeting touchscreen devices while excluding touchpad). If your touchscreen has a different name pattern, you may need to modify the `DEVICE_PATTERN` variable in the scripts.
 
 ### Step 3: Test Manual Touchscreen Detection
 ```bash
@@ -183,12 +184,18 @@ which notify-send
 ## Technical Details
 
 ### Device Detection Pattern
-The script searches for devices matching: `[Tt]ouch.*[Ss]creen|ELAN.*:.*`
+The script searches for devices matching: `[Tt]ouch.*[Ss]creen|ELAN2514.*`
 
-Common touchscreen device names:
-- `ELAN2514:00 04F3:2BEB`
-- `Touchscreen`
-- `Multi-touch`
+This pattern specifically targets touchscreen devices while excluding touchpad:
+- **Touchscreen devices:** ELAN2514 controller (touchscreen)
+- **Excluded:** ELAN072D controller (touchpad/mouse)
+
+Common touchscreen device names detected:
+- `ELAN2514:00 04F3:2BEB` (main touchscreen)
+- `ELAN2514:00 04F3:2BEB Stylus` (stylus input)
+- `ELAN2514:00 04F3:2BEB UNKNOWN` (additional touchscreen interfaces)
+- `Touchscreen` (generic touchscreen devices)
+- `Multi-touch` (multi-touch displays)
 
 ### Process Management
 - **Lock file**: `/tmp/touchscreen-toggle/touchscreen.lock`
@@ -215,12 +222,17 @@ nano ~/touchscreen-toggle.sh
 nano ~/touchscreen-toggle-desktop.sh
 
 # 3. Modify this line in both scripts:
-DEVICE_PATTERN="[Tt]ouch.*[Ss]creen|ELAN.*:.*"
+DEVICE_PATTERN="[Tt]ouch.*[Ss]creen|ELAN2514.*"
 
 # Examples for different devices:
-# For Wacom: DEVICE_PATTERN="[Ww]acom.*[Tt]ouch|[Tt]ouch.*[Ss]creen"
-# For Synaptics: DEVICE_PATTERN="[Ss]ynaptics.*[Tt]ouch|[Tt]ouch.*[Ss]creen"
-# For generic: DEVICE_PATTERN="[Tt]ouch"
+# For Wacom touchscreen: DEVICE_PATTERN="[Ww]acom.*[Tt]ouch|[Tt]ouch.*[Ss]creen"
+# For Synaptics touchscreen: DEVICE_PATTERN="[Ss]ynaptics.*[Tt]ouch|[Tt]ouch.*[Ss]creen"
+# For different ELAN models: DEVICE_PATTERN="[Tt]ouch.*[Ss]creen|ELAN1234.*"
+# For generic touchscreen only: DEVICE_PATTERN="[Tt]ouch.*[Ss]creen"
+# 
+# IMPORTANT: Always exclude touchpad patterns like:
+# - Avoid matching devices with "Touchpad" or "Mouse" in their names
+# - Use specific controller IDs (like ELAN2514) rather than broad patterns
 ```
 
 ### Custom Icon

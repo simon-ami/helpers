@@ -21,7 +21,7 @@ cat > "$TEMP_SCRIPT" << 'EOF'
 # Desktop version - no notifications, just exit codes
 
 PID_DIR="/tmp/touchscreen-toggle"
-DEVICE_PATTERN="[Tt]ouch.*[Ss]creen|ELAN.*:.*"
+DEVICE_PATTERN="[Tt]ouch.*[Ss]creen|ELAN2514.*"
 LOCK_FILE="$PID_DIR/touchscreen.lock"
 
 # Create PID directory if it doesn't exist
