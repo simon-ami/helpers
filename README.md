@@ -15,14 +15,10 @@ helpers/
 
 ## Linux Helpers
 
-### Touchscreen Toggle (Ubuntu 22.04+)
+### Touchscreen Toggle
 **Path:** `linux/touchscreen-toggle/`
 
-Complete solution for toggling touchscreen input on Ubuntu systems. Features desktop integration, system notifications, and robust process management.
-
-- **Quick Install:** Follow instructions in the project README
-- **Platforms:** Ubuntu 22.04+ (Wayland/X11)
-- **Features:** Desktop shortcuts, GUI authentication, system notifications
+Complete solution for toggling touchscreen input on Ubuntu systems.
 
 ## Windows Helpers
 
@@ -31,16 +27,6 @@ Complete solution for toggling touchscreen input on Ubuntu systems. Features des
 ## Universal Helpers
 
 *Coming soon...*
-
-## Contributing
-
-When adding new helpers:
-
-1. Choose appropriate platform directory (`linux/`, `windows/`, `universal/`)
-2. Create project subdirectory with descriptive name
-3. Include comprehensive README with installation instructions
-4. Organize files logically (scripts, configs, assets, etc.)
-5. Test thoroughly before committing
 
 ## License
 
