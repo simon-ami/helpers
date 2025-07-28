@@ -306,6 +306,6 @@ nano ~/.local/share/applications/touchscreen-toggle.desktop
 
 ---
 
-**Tested on:** Ubuntu 22.04+ (Wayland/X11)  
+**Tested on:** Ubuntu 24.04 (Wayland)  
 **Requirements:** `bash`, `evtest`, `libnotify-bin`, `pkexec`  
 **License:** MIT
