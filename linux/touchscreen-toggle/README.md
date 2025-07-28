@@ -7,13 +7,10 @@ A robust solution to enable/disable touchscreen input on Ubuntu 22.04+ (works wi
 
 ## Features
 
-- ✅ **One-click toggle** - Desktop shortcut and terminal command
-- ✅ **System notifications** - Toast messages with custom icon
-- ✅ **Process management** - Prevents orphaned processes and handles cleanup
-- ✅ **Desktop integration** - GUI password dialog for desktop shortcuts
-- ✅ **Robust error handling** - Lock files prevent multiple instances
-- ✅ **Cross-session compatibility** - Works in both Wayland and X11
-- ✅ **Touchpad preservation** - Only disables touchscreen, keeps touchpad functional
+- **Desktop shortcut & terminal command** - One-click toggle from anywhere
+- **System notifications** - Visual feedback when toggling
+- **Touchpad preservation** - Only disables touchscreen, keeps touchpad functional
+- **Wayland/X11 compatible** - Works on both display servers
 
 ## Quick Setup (Standard Installation)
 
@@ -131,57 +128,6 @@ sudo evtest
 - **Double-click** desktop icon, or
 - **Search** "Touchscreen Toggle" in applications menu
 
-## How It Works
-
-### Core Technology
-- **`evtest --grab`** - Captures touchscreen input events to disable functionality
-- **Background processes** - Maintains device grab until explicitly stopped
-- **PID tracking** - Robust process management with cleanup
-
-### Architecture
-```
-touchscreen-toggle.sh          # Main script (terminal use)
-├── Direct sudo authentication
-├── System notifications
-└── Process management
-
-touchscreen-toggle-desktop.sh  # Desktop wrapper
-├── pkexec GUI authentication
-├── User-session notifications
-└── Temporary root script execution
-```
-
-### Process Flow
-1. **Startup** - Cleanup orphaned processes, acquire lock
-2. **Detection** - Find touchscreen devices via `/proc/bus/input/devices`
-3. **Toggle** - Disable: spawn `evtest --grab` processes | Enable: kill tracked processes
-4. **Notification** - Show system toast with status
-5. **Cleanup** - Release lock, remove temporary files
-
-## Files Structure
-
-```
-touchscreen-toggle/
-├── README.md                           # This file
-├── scripts/
-│   ├── touchscreen-toggle.sh          # Main toggle script
-│   └── touchscreen-toggle-desktop.sh  # Desktop wrapper with GUI auth
-├── desktop-files/
-│   └── touchscreen-toggle.desktop     # Desktop entry for shortcuts
-└── assets/
-    └── finger-touch.png               # Custom icon for notifications
-```
-
-## Installation Locations
-
-| File | Destination | Purpose |
-|------|-------------|---------|
-| `touchscreen-toggle.sh` | `~/` | Main script for terminal use |
-| `touchscreen-toggle-desktop.sh` | `~/` | Desktop wrapper for GUI auth |
-| `touchscreen-toggle.desktop` | `~/.local/share/applications/` | Applications menu entry |
-| `touchscreen-toggle.desktop` | `~/Desktop/` | Desktop shortcut |
-| `finger-touch.png` | `~/Downloads/` | Icon for notifications |
-
 ## Dependencies
 
 - **`evtest`** - Input device event interface
@@ -232,32 +178,6 @@ echo $XDG_CURRENT_DESKTOP
 ### Touchpad also gets disabled
 Your system likely has different hardware than expected. Follow [Custom Setup](#custom-setup-only-if-standard-setup-fails) to create a more specific device pattern that excludes your touchpad.
 
-## Technical Details
-
-### Device Detection Pattern
-The script searches for devices matching: `[Tt]ouch.*[Ss]creen|ELAN2514.*`
-
-This pattern specifically targets touchscreen devices while excluding touchpad:
-- **Touchscreen devices:** ELAN2514 controller (touchscreen)
-- **Excluded:** ELAN072D controller (touchpad/mouse)
-
-Common touchscreen device names detected:
-- `ELAN2514:00 04F3:2BEB` (main touchscreen)
-- `ELAN2514:00 04F3:2BEB Stylus` (stylus input)
-- `ELAN2514:00 04F3:2BEB UNKNOWN` (additional touchscreen interfaces)
-- `Touchscreen` (generic touchscreen devices)
-- `Multi-touch` (multi-touch displays)
-
-### Process Management
-- **Lock file**: `/tmp/touchscreen-toggle/touchscreen.lock`
-- **PID file**: `/tmp/touchscreen-toggle/touchscreen.pid`
-- **Cleanup**: Automatic on script exit, interrupt, or termination
-
-### Security
-- Scripts require `sudo` for device access
-- Desktop wrapper uses `pkexec` for GUI authentication
-- No passwords stored anywhere
-- Minimal privilege requirements
 
 ## Advanced Configuration
 
@@ -306,6 +226,6 @@ nano ~/.local/share/applications/touchscreen-toggle.desktop
 
 ---
 
-**Tested on:** Ubuntu 24.04 (Wayland)  
+**Tested on:** Ubuntu 22.04+ (Wayland/X11), Ubuntu 24.04 (Wayland)  
 **Requirements:** `bash`, `evtest`, `libnotify-bin`, `pkexec`  
 **License:** MIT
