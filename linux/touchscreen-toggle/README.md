@@ -236,6 +236,12 @@ nano ~/.local/share/applications/touchscreen-toggle.desktop
 
 ---
 
+## Credits
+
+- **Icon:** <a href="https://www.flaticon.com/free-icons/tap" title="tap icons">Tap icons created by kerismaker - Flaticon</a>
+
+---
+
 **Tested on:** Ubuntu 22.04+ (Wayland/X11)  
 **Requirements:** `bash`, `evtest`, `libnotify-bin`, `pkexec`  
 **License:** MIT
