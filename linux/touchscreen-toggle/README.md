@@ -301,6 +301,7 @@ nano ~/.local/share/applications/touchscreen-toggle.desktop
 
 ## Credits
 
+- **Core technique:** Based on [chimeraha's AskUbuntu answer](https://askubuntu.com/a/1412240) using `evtest --grab` to disable touchscreen on Ubuntu 22.04 Wayland
 - **Icon:** <a href="https://www.flaticon.com/free-icons/tap" title="tap icons">Tap icons created by kerismaker - Flaticon</a>
 
 ---
