@@ -29,6 +29,24 @@ zen-workspace[style*="translateX(0px)"] {
   display: flex !important;
 }
 
+/* Target essentials/pinned tabs section animations */
+:root[animating-background] .zen-sidebar-pinned-tabs,
+:root[animating-background] #zen-sidebar-pinned-tabs,
+:root[animating-background] [class*="pinned"],
+:root[animating-background] [class*="essential"] {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Also disable during swipe gestures */
+:root[swipe-gesture] .zen-sidebar-pinned-tabs,
+:root[swipe-gesture] #zen-sidebar-pinned-tabs,
+:root[swipe-gesture] [class*="pinned"],
+:root[swipe-gesture] [class*="essential"] {
+  transform: none !important;
+  transition: none !important;
+}
+
 /* Disable background transitions */
 :root[animating-background] {
   --zen-background-opacity: inherit !important;
