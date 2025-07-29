@@ -14,9 +14,18 @@ zen-workspace[style*="translateX(0px)"] {
   display: flex !important;
 }
 
-/* During animation, show only the first workspace with translateX(0) */
-:root[animating-background] zen-workspace[style*="translateX(0%)"]:first-of-type,
-:root[animating-background] zen-workspace[style*="translateX(0px)"]:first-of-type {
+/* During animation, show only the LAST workspace (target workspace) regardless of translateX value */
+:root[animating-background] zen-workspace:last-of-type {
+  display: flex !important;
+}
+
+/* Also handle swipe gesture state to prevent rubber band effect */
+:root[swipe-gesture] zen-workspace {
+  display: none !important;
+  transform: none !important;
+}
+
+:root[swipe-gesture] zen-workspace:last-of-type {
   display: flex !important;
 }
 
