@@ -1,0 +1,27 @@
+/* Disable workspace animations - simple and effective */
+
+/* Hide all workspaces */
+zen-workspace {
+  display: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Show only active workspace (no translateX or translateX(0)) */
+zen-workspace:not([style*="translateX("]),
+zen-workspace[style*="translateX(0%)"],
+zen-workspace[style*="translateX(0px)"] {
+  display: flex !important;
+}
+
+/* During animation, show only the first workspace with translateX(0) */
+:root[animating-background] zen-workspace[style*="translateX(0%)"]:first-of-type,
+:root[animating-background] zen-workspace[style*="translateX(0px)"]:first-of-type {
+  display: flex !important;
+}
+
+/* Disable background transitions */
+:root[animating-background] {
+  --zen-background-opacity: inherit !important;
+  transition: none !important;
+}
