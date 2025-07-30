@@ -8,6 +8,8 @@ Disables the sliding animations when switching between workspaces in Zen Browser
    - Linux: `~/.zen/[profile-name]/chrome/`
    - Windows: `%APPDATA%\Zen\Profiles\[profile-name]\chrome\`
    - macOS: `~/Library/Application Support/Zen/Profiles/[profile-name]/chrome/`
+  
+(Alternatively, complete step 1 here: [docs.zen-browser.app/guides/manage-profiles#1](https://docs.zen-browser.app/guides/manage-profiles#1-open-your-current-profile-folder)
 
 2. **Create chrome directory if it doesn't exist:**
    ```bash
