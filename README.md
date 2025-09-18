@@ -11,6 +11,7 @@ helpers/
 │   └── touchscreen-toggle/  # Ubuntu touchscreen toggle solution
 ├── windows/           # Windows-specific helpers
 └── universal/         # Cross-platform helpers
+    └── zen-browser-workspace-animation-disable/  # Zen Browser animation disabler
 ```
 
 ## Linux Helpers
@@ -26,7 +27,10 @@ Complete solution for toggling touchscreen input on Ubuntu systems.
 
 ## Universal Helpers
 
-*Coming soon...*
+### Zen Browser - Disable Workspace Switching Animations
+**Path:** `universal/zen-browser-workspace-animation-disable/`
+
+Disables the sliding animations when switching between workspaces in Zen Browser's sidebar. Works across all platforms (Linux, Windows, macOS).
 
 ## License
 
