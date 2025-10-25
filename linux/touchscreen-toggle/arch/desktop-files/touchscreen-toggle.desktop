@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Touchscreen Toggle
+Comment=Toggle touchscreen on/off
+Exec=/home/simon/.local/bin/touchscreen-toggle
+Icon=/home/simon/.local/share/applications/icons/finger-touch.png
+Terminal=false
+StartupNotify=false
+Categories=Utility;System;
+Keywords=touchscreen;toggle;disable;enable;
